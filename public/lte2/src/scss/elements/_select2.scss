@@ -1,0 +1,49 @@
+// =============== SELECT2 bootstrap 5 ================
+.select2-container--bootstrap-5.select2-container--focus .select2-selection, .select2-container--bootstrap-5.select2-container--open .select2-selection,
+.select2-container--bootstrap-5 .select2-dropdown .select2-search .select2-search__field:focus,
+.select2-container--bootstrap-5 .select2-dropdown
+{
+  border-color: #027afe;
+  box-shadow: 0 0 6px #add4ff;
+}
+.form-select-sm~.select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__rendered .select2-selection__choice {
+  font-size: 0.6rem;
+}
+.select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__rendered .select2-selection__choice {
+  font-size: 0.7rem;
+}
+.form-select-lg~.select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__rendered .select2-selection__choice {
+  font-size: 0.9rem;
+}
+
+.dark .select2-container--bootstrap-5.select2-container .select2-selection
+{
+  background-color: transparent;
+  border: 1px solid $gray-extra-dark ;
+  color: $white;
+}
+.dark .select2-container--bootstrap-5 .select2-dropdown, 
+.dark .select2-container--bootstrap-5 .select2-dropdown .select2-search .select2-search__field:focus, 
+.dark .select2-container--bootstrap-5.select2-container--focus .select2-selection, 
+.dark .select2-container--bootstrap-5.select2-container--open .select2-selection  {
+  border-color: #027afe;
+  box-shadow: none;
+  background-color: $dark;
+  color: $white;
+}
+.dark .select2-container--bootstrap-5 .select2-dropdown .select2-results__options .select2-results__option.select2-results__option--highlighted {
+  background-color: $dark-secondary;
+  color: $white;
+}
+
+.dark .select2-container .select2-selection--single .select2-selection__rendered {
+  color: $gray;
+}
+.dark .select2-container--bootstrap-5 .select2-dropdown .select2-search .select2-search__field {
+  background-color: $dark-secondary;
+}
+
+.dark .select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__rendered .select2-selection__choice {
+  border: 1px solid #027afe;
+  color: $white;
+}

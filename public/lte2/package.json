@@ -1,0 +1,56 @@
+{
+  "name": "arfa",
+  "version": "1.1.0",
+  "description": "free bootstrap 5 admin template",
+  "main": "index.js",
+  "scripts": {
+    "dev": "gulp",
+    "build": "gulp html sass js copyVendor"
+  },
+  "keywords": [
+    "arfa admin template",
+    "free bootstrap 5 admin template",
+    "dashboard admin template",
+    "arfa template",
+    "responsive admin template bootstarp 5"
+  ],
+  "author": "Muhamad Abdullah",
+  "license": "MIT",
+  "dependencies": {
+    "@fullcalendar/bootstrap5": "^6.1.6",
+    "@popperjs/core": "^2.11.7",
+    "bootstrap": "^5.2.3",
+    "bootstrap-datepicker": "^1.9.0",
+    "bootstrap-icons": "^1.10.5",
+    "chart.js": "2.9.4",
+    "datatables.net": "^1.10.24",
+    "datatables.net-bs5": "^1.13.4",
+    "datatables.net-fixedheader": "^3.1.8",
+    "datatables.net-responsive": "^2.4.1",
+    "datatables.net-responsive-bs5": "^2.4.1",
+    "fullcalendar": "^6.1.6",
+    "izitoast": "^1.4.0",
+    "jquery": "3.5.1",
+    "jquery-validation": "^1.19.3",
+    "perfect-scrollbar": "^1.5.0",
+    "select2": "^4.1.0-rc.0",
+    "select2-bootstrap-5-theme": "^1.3.0",
+    "sweetalert2": "^10.16.3"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.2.6",
+    "browser-sync": "^2.26.14",
+    "cssnano": "^5.0.5",
+    "gulp": "^4.0.2",
+    "gulp-color": "^0.0.2",
+    "gulp-dart-sass": "^1.0.2",
+    "gulp-npm-dist": "^1.0.3",
+    "gulp-nunjucks": "^5.1.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-postcss": "^9.0.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-uglify": "^3.0.2",
+    "postcss": "^8.3.0"
+  }
+}

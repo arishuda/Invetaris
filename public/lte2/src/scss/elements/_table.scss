@@ -1,0 +1,12 @@
+table.table {
+  color: $gray-dark;
+  thead {
+    background-color: $gray-extra-light;
+    tr th {
+      font-weight: 500;
+    }
+  }
+  > :not(:last-child) > :last-child > * {
+    border-bottom-color: $gray;
+  }
+}

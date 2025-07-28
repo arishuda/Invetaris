@@ -1,0 +1,703 @@
+@extends('layouts.appuser')
+
+@push('styles')
+    <style>
+        #signature {
+            width: 400px;
+            height: 400px;
+            border: 1px solid black;
+        }
+    </style>
+@endpush
+
+@section('content')
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+
+                <div class="card">
+                    <div class="card-header">Form Konfirmasi Kembali - {{ $data->nama_barang }}
+                        <div class="text-right">
+                            <a href="{{ route('outputbak', \Hashids::encode($data->id)) }}" class="btn btn-primary btn-sm" target="_blank">Lihat
+                                Berita Acara</a>
+                            <a href="{{ route('downloadbak', \Hashids::encode($data->id)) }}" class="btn btn-success btn-sm"
+                                target="_blank">Download Berita Acara</a>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+
+                        <form action="{{ route('kembalibarang', $data->id) }}" method="post">
+                            @csrf
+                            <div class="row">
+                                <div class="col-sm-6">
+                                  <div class="form-group">
+                                    <label>Link Tanda Tangan</label>
+                                    <input type="text" class="form-control" value="{{url('/beritaacarakembali/user/'.\Crypt::encryptString($data->id))}}" id="myInput">
+                                  </div>
+                                </div>
+                                <div class="col-sm-6">
+                                  <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <a class="btn btn-block btn-success" onclick="myFunction()">Copy to Clipboard</i></a>
+                                  </div>
+                                </div>
+                              </div>
+          
+                              <script type="text/javascript">
+                              function myFunction() {
+                                /* Get the text field */
+                                var copyText = document.getElementById("myInput");
+          
+                                /* Select the text field */
+                                copyText.select();
+          
+                                /* Copy the text inside the text field */
+                                document.execCommand("copy");
+          
+                                /* Alert the copied text */
+                                alert("Copy Text: " + copyText.value);
+                                }
+                              </script>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Tanggal Berita Acara</label>
+                                        <input class="form-control" value="{{ $data->tanggal_ba }}" id="date-ba"
+                                            name="tanggal_ba" placeholder="yyyy-mm-dd" type="date">
+                                        {{-- <input type="date" class="form-control" name="tanggal_ba" value="{{$data->tanggal_ba}}"> --}}
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Nomor BA</label>
+                                        <input type="text" class="form-control" name="nomor"
+                                            value="{{ $data->nomor }}" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <h4>Data Pihak Kesatu <i>(Pengembali)</i></h4>
+
+                            <hr>
+
+                            <div class="form-group">
+                                <!-- <label>Select</label> -->
+
+                            </div>
+
+                            <div class="form-group">
+                                <label>Nama Pihak Kesatu</label>
+                                <input type="text" class="form-control" name="nama_p2" value="{{ $data->nama_p2 }}"
+                                    required>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Pengambil</label>
+                                        <select id="jenisinput" name="statuskerja_p2" class="form-control">
+                                            @if ($data->statuskerja_p2 == 1)
+                                                <option id='1' value="1">ASN</option>
+                                            @elseif($data->statuskerja_p2 == 2)
+                                                <option id='2' value="2">NON-ASN</option>
+                                            @else
+                                            @endif
+                                            <option id='0' value="">- Pilih -</option>
+                                            <option id='1' value="1">ASN</option>
+                                            <option id='2' value="2">NON-ASN</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4" id="asn-1" style="display:none;">
+                                    <div class="form-group">
+                                        <label>NIP</label>
+                                        <input type="text" class="form-control" name="nip_p2"
+                                            value="{{ $data->nip_p2 }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4" id="asn-2" style="display:none;">
+                                    <div class="form-group">
+                                        <label>NRK</label>
+                                        <input type="text" class="form-control" name="nrk_p2"
+                                            value="{{ $data->nrk_p2 }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-8" id="nonasn" style="display:none;">
+                                    <div class="form-group">
+                                        <label>NIK</label>
+                                        <input type="text" class="form-control" name="nik_p2"
+                                            value="{{ $data->nik_p2 }}">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label>Lokasi Kerja</label>
+                                <input type="text" class="form-control" name="lokasikerja"
+                                    value="{{ $data->lokasikerja }}">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Jabatan</label>
+                                <input type="text" class="form-control" name="jabatan_p2"
+                                    value="{{ $data->jabatan_p2 }}">
+                            </div>
+
+
+                            <br>
+
+                            <hr>
+
+                            <h4>Data Pihak Kedua <i>(Penerima)</i></h4>
+
+                            <hr>
+                            <div class="form-group">
+                                <label>Nama Pihak Kedua </label>
+                                <input type="text" class="form-control" name="nama_p1" value="{{ $data->nama_p1 }}"
+                                    required>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>NIP</label>
+                                        <input type="text" class="form-control" name="nip_p1"
+                                            value="{{ $data->nip_p1 }}"required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>NRK</label>
+                                        <input type="text" class="form-control" name="nrk_p1"
+                                            value="{{ $data->nrk_p1 }}"required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Jabatan</label>
+                                <input type="text" class="form-control" name="jabatan_p1"
+                                    value="{{ $data->jabatan_p1 }}"required>
+                            </div>
+                            <br>
+
+                            <hr>
+
+                            <div class="form-group">
+                                <label>Nama Barang yang dipinjam</label>
+                                <input type="text" class="form-control" name="nama_barang"
+                                    value="{{ $data->nama_barang }}" readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Nama Peminjam</label>
+                                <input type="text" class="form-control" name="dipinjam"
+                                    value="{{ $data->dipinjam }}" readonly>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Jumlah Barang yang dipinjam</label>
+                                        <input type="text" class="form-control" value="{{ $data->jumlah_pinjam }}"
+                                            readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Jumlah Barang dikembalikan sebagian</label>
+                                        <input type="text" class="form-control" value="{{ $log }}" readonly>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-md-4">
+                                    @if (
+                                        $data->jumlah_pinjam !=
+                                            \DB::table('logkembali')->where('id_peminjaman', $data->id)->sum('jumlah_kembali'))
+                                        <div class="form-group">
+                                            <label>Jumlah Barang yang ingin dikembalikan</label>
+                                            <input type="text" class="form-control" name="jumlah_kembali">
+                                        </div>
+                                    @else
+                                        <div class="form-group">
+                                            <label>Jumlah Barang yang ingin dikembalikan</label>
+                                            <input type="text" class="form-control" name="jumlah_kembali" readonly>
+                                        </div>
+                                    @endif
+                                </div> --}}
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="serial_number">Pilih Serial Number</label>
+                                        <div class="input-group">
+                                            <button id="addButton" class="btn btn-primary btn-block"
+                                                type="button">Add</button>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                
+                            </div>
+                        
+                            <div id="additionalSelects">
+    
+                            </div>
+                        
+                            <div class="form-group">
+                                <label>Nomor Serial Barang <i>(Serial Number)</i></label>
+                                <input type="text" class="form-control" name="serialNumbers" readonly
+                                    value="{{ implode(', ', $serialNumbers) }}">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Tanggal Kembali</label>
+                                <input type="text" class="form-control" name="tanggal_kembali"
+                                    value="{{ date('Y-m-d') }}" readonly>
+                            </div>
+
+                            <br>
+                            <h4>Form Edit Pdf</h4>
+                              <hr>
+                              <div class="form-group">
+                                <label>Keterangan 1</label>
+                                @if($data->ket1==null)
+                            
+                              <textarea id="ket1" name="ket1" rows="3" cols="80" class="form-control">PIHAK KESATU menyerahkan barang kepada PIHAK KEDUA, dan PIHAK KEDUA menyatakan menerima barang dari PIHAK KESATU berupa
+                              </textarea>
+                              @elseif($data->ket1)
+                              <textarea id="ket1" name="ket1" rows="3" cols="80"  class="form-control"> {{$data->ket1}}</textarea>
+                              @endif
+                            </div>
+                            <div class="form-group">
+                                <label>Keterangan 2</label>
+                              @if($data->ket2==null)
+                            
+                              <textarea id="ket2" name="ket2" rows="3" cols="80" class="form-control">Barang tersebut telah dikembalikan oleh PIHAK kesatu dan sudah diserahkan kembali oleh PIHAK KEDUA pada tanggal.</textarea>
+                              @elseif ($data->ket2)
+                              <textarea id="ket2" name="ket2" rows="3" cols="80" class="form-control">{{$data->ket2}}</textarea>
+                              @endif
+                            </div>
+                            <div class="form-group">
+                              <label>Keterangan 3</label>
+                              @if ($data->ket3==null)
+                              <textarea id="ket3" name="ket3" rows="3" cols="80" class="form-control">Demikianlah Berita Acara Serah Terima Barang ini dibuat oleh kedua belah pihak, adapun barang-barang tersebut dalam keadaan baik, sejak penandatanganan Berita Acara ini, maka pemanfaatannya menjadi tanggung jawab PIHAK KEDUA sesuai ketentuan pengelolaan aset.</textarea>
+                              @elseif ($data->ket3)
+                              <textarea id="ket3" name="ket3" rows="3" cols="80" class="form-control">{{$data->ket3}}</textarea>
+                              @endif
+                            </div>
+
+                            <br>
+
+                            <div class="table-responsive">
+                                <div class="row">
+                                    <div class="col-md-6" style="text-align: center;">
+                                        Yang Menterahkan, <br>
+                                        PIHAK KESATU <br>
+
+                                        @if (empty($data->ttd_p2))
+                                            <button type="button" class="btn btn-block btn-primary" data-toggle="modal"
+                                                data-target="#ttd_p2">
+                                                Klik Disini untuk Tanda Tangan
+                                            </button>
+
+                                            <br />
+
+                                            <center>
+                                                <img src='' id='sign_prev_p2' width="250px"
+                                                    style="display: none;" />
+                                            </center>
+
+                                            <br>
+
+                                            {{ $data->nama_p2 }}
+                                            <br>
+                                            {{ $data->nip_p2 }}
+
+                                            <br>
+
+                                            <textarea id='output_p2' name="ttd_p2" rows="1" class="form-control" readonly="" required>
+                                        </textarea>
+                                        @else
+                                            <center>
+                                                <img src="data:image/png;base64,{{ $data->ttd_p2 }}" width="250px" />
+                                            </center>
+
+                                            <br>
+
+                                            {{ $data->nama_p2 }}
+                                            <br>
+                                            @if (empty($data->nik_p2))
+                                                {{ $data->nip_p2 }}
+                                            @else
+                                                {{ $data->nik_p2 }}
+                                            @endif
+                                        @endif
+
+                                        <div class="modal fade" id="ttd_p2" tabindex="-1" role="dialog"
+                                            aria-labelledby="ttd_p2" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="ttd_p2">Digital Signature Pihak
+                                                            Kesatu</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <center>
+                                                            <center>
+                                                                <div id="signature" style=''>
+                                                                    <canvas id="signature-pad_p2" class="signature-pad_p2"
+                                                                        width="400px" height="400px"></canvas>
+                                                                </div>
+                                                            </center>
+                                                        </center>
+
+                                                        <br />
+                                                    </div>
+                                                    <div class="modal-footer">
+
+                                                        <button type="button" id='hapus_p2'
+                                                            class="btn btn-danger button clear"
+                                                            data-action="clear_p2">Clear</button>
+                                                        <input type='button' id='click_p2' value='Apply'
+                                                            class="btn btn-secondary" data-dismiss="modal">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-md-6" style="text-align: center;">
+                                        Yang Menerima, <br>
+                                        PIHAK KEDUA <br>
+
+                                        {{-- @if (
+                                            $data->jumlah_pinjam !=
+                                                \DB::table('logkembali')->where('id_peminjaman', $data->id)->sum('jumlah_kembali')) --}}
+                                                @if(empty($data->ttd_p1))
+                                            <button type="button" class="btn btn-block btn-primary" data-toggle="modal"
+                                                data-target="#ttd_p1">
+                                                Klik Disini untuk Tanda Tangan
+                                            </button>
+
+                                            <br />
+
+                                            <center>
+                                                <img src='' id='sign_prev_p1' width="250px"
+                                                    style="display: none;" />
+                                            </center>
+
+                                            <br>
+
+                                            {{ $data->nama_p1 }}
+                                            <br>
+                                            {{ $data->nip_p1 }}
+
+                                            <br>
+                                            <textarea id='output_p1' name="ttd_p1" rows="1" class="form-control" readonly="" required>
+                                        </textarea>
+                                        @else
+                                            <center>
+                                                <img src="data:image/png;base64,{{ $data->ttd_p1 }}" width="250px" />
+                                            </center>
+                                            <br>
+
+                                            {{ $data->nama_p1 }}
+                                            <br>
+                                            {{ $data->nip_p1 }}
+                                        @endif
+
+                                        <div class="modal fade" id="ttd_p1" tabindex="-1" role="dialog"
+                                            aria-labelledby="ttd_p1" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="ttd_p1">Digital Signature Pihak
+                                                            Kedua</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <center>
+                                                            <center>
+                                                                <div id="signature" style=''>
+                                                                    <canvas id="signature-pad_p1" class="signature-pad_p1"
+                                                                        width="400px" height="400px"></canvas>
+                                                                </div>
+                                                            </center>
+                                                        </center>
+
+                                                        <br />
+                                                    </div>
+                                                    <div class="modal-footer">
+
+                                                        <button type="button" id='hapus_p1'
+                                                            class="btn btn-danger button clear"
+                                                            data-action="clear_p1">Clear</button>
+                                                        <input type='button' id='click_p1' value='Apply'
+                                                            class="btn btn-secondary" data-dismiss="modal">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-12" style="text-align: center;">
+                                        Mengetahui, <br>
+                                        Kepala Sub Bagian Tata Usaha <br>
+                                        Pusdatin PMPTSP DPMPTSP DKI Jakarta <br>
+
+                                        @if (empty($data->ttd_kasatpel))
+                                            <button type="button" class="btn btn-block btn-primary" data-toggle="modal"
+                                                data-target="#ttd_p3">
+                                                Klik Disini untuk Tanda Tangan
+                                            </button>
+
+                                            <br />
+
+                                            <center>
+                                                <img src='' id='sign_prev_p3' width="250px"
+                                                    style="display: none;" />
+                                            </center>
+
+                                            <br>
+                                            Darmawan Apriyadi <br>
+                                            NIP 198504132010011023
+
+                                            <br>
+
+                                            <textarea id='output_p3' name="ttd_kasatpel" rows="1" class="form-control" readonly="" required>
+                                    </textarea>
+                                        @else
+                                            <center>
+                                                <img src="data:image/png;base64,{{ $data->ttd_kasatpel }}"
+                                                    width="250px" />
+                                            </center>
+
+                                            <br>
+                                            Darmawan Apriyadi <br>
+                                            NIP 198504132010011023
+                                        @endif
+
+                                        <div class="modal fade" id="ttd_p3" tabindex="-1" role="dialog"
+                                            aria-labelledby="ttd_p3" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="ttd_p3">Digital Signature Kasubag
+                                                            Prasasti</h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <center>
+                                                            <center>
+                                                                <div id="signature" style=''>
+                                                                    <canvas id="signature-pad_p3" class="signature-pad_p3"
+                                                                        width="400px" height="400px"></canvas>
+                                                                </div>
+                                                            </center>
+                                                        </center>
+
+                                                        <br />
+                                                    </div>
+                                                    <div class="modal-footer">
+
+                                                        <button type="button" id='hapus_p3'
+                                                            class="btn btn-danger button clear"
+                                                            data-action="clear_p3">Clear</button>
+                                                        <input type='button' id='click_p3' value='Apply'
+                                                            class="btn btn-secondary" data-dismiss="modal">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <button type="submit" name="button" class="btn btn-block btn-success">Submit</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    </div>
+    {{-- <script src="{{asset('plugin/spad/docs/js/signature_pad.umd.js')}}"></script> --}}
+    {{-- <script src="{{asset('plugin/ttduser.js')}}"></script> --}}
+@endsection
+
+@push('scripts')
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="{{ asset('plugin/spad/docs/js/signature_pad.umd.js') }}"></script>
+    <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Select2 CSS -->
+
+
+<!-- Select2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- <script src="{{ asset('plugin/ttduser.js') }}"></script> -->
+    
+    <script>
+
+$(function() {
+    var maxOptions = 0;
+    var currentCount = 0;
+
+    $('#addButton').click(function() {
+        var id = "{{$data->id}}";
+
+        $.ajax({
+            url: '/ttd/fetchttd/' + id,
+            type: 'get',
+            dataType: 'json',
+            success: function(response) {
+                if (response && response.serial_numbers && response.serial_numbers.length > 0) {
+                    maxOptions = response.serial_numbers.length;
+                    var newSelect = $(
+                        '<div class="form-group">' +
+                        '<div class="d-flex align-items-center">' +
+                        '<select class="select2 form-control" name="serial_number[]">' +
+                        '<option value="">- Pilih -</option>' +
+                        '</select>' +
+                        '<button type="button" class="btn btn-outline-danger remove-input-field">Delete</button>' +
+                        '</div>' +
+                        '</div>'
+                    );
+                    var selectElement = newSelect.find('select');
+                    $.each(response.serial_numbers, function(index, serialNumber) {
+                        selectElement.append($('<option>', {
+                            value: serialNumber,
+                            text: serialNumber
+                        }));
+                    });
+
+                    $('#additionalSelects').append(newSelect);
+                    currentCount++;
+                    $('#addButton').prop('disabled', currentCount >= maxOptions);
+                    selectElement.select2();
+                } else {
+                    $('#addButton').prop('disabled', true);
+                }
+            }
+        });
+    });
+
+
+    $(document).on('click', '.remove-input-field', function() {
+        $(this).closest('.form-group').remove();
+        currentCount--;
+        $('#addButton').prop('disabled', currentCount >= maxOptions);
+    });
+});
+
+
+        $(function() {
+            $("#jenisinput").change(function() {
+                if ($("#0").is(":selected")) {
+                    $("#asn-1").hide();
+                    $("#asn-2").hide();
+                    $("#nonasn").hide();
+                } else if ($("#1").is(":selected")) {
+                    $("#asn-1").show();
+                    $("#asn-2").show();
+                    $("#nonasn").hide();
+                } else {
+                    $("#asn-1").hide();
+                    $("#asn-2").hide();
+                    $("#nonasn").show();
+                }
+            }).trigger('change');
+        });
+        $(document).ready(function() {
+
+            var signaturePad = new SignaturePad(document.getElementById('signature-pad_p1'));
+            var clear = document.getElementById('hapus_p1');
+            var aplbtn = document.getElementById('click_p1');
+
+            $(aplbtn).click(function() {
+                var datattd = signaturePad.toDataURL('image/png');
+                var data = datattd.replace(/^data:image\/(png|jpg);base64,/, "");
+                $('#output_p1').val(data);
+                $("#sign_prev_p1").show();
+                $("#sign_prev_p1").attr("src", "data:image/png;base64," + data);
+            });
+
+            $(clear).click(function() {
+                signaturePad.clear();
+                // Open image in the browser
+                //window.open(data);
+            });
+
+
+            //  ---------------------------------------
+
+            var signaturePad2 = new SignaturePad(document.getElementById('signature-pad_p2'));
+            var clear2 = document.getElementById('hapus_p2');
+            var aplbtn2 = document.getElementById('click_p2');
+
+            $(aplbtn2).click(function() {
+                var datattd2 = signaturePad2.toDataURL('image/png');
+                var data2 = datattd2.replace(/^data:image\/(png|jpg);base64,/, "");
+                $('#output_p2').val(data2);
+                $("#sign_prev_p2").show();
+                $("#sign_prev_p2").attr("src", "data:image/png;base64," + data2);
+            });
+
+            $(clear2).click(function() {
+                signaturePad2.clear();
+                // Open image in the browser
+                //window.open(data);
+            });
+        })
+    </script>
+    <script>
+        var signaturePad3 = new SignaturePad(document.getElementById('signature-pad_p3'));
+        var clear3 = document.getElementById('hapus_p3');
+        var aplbtn3 = document.getElementById('click_p3');
+
+        $(aplbtn3).click(function() {
+            var datattd3 = signaturePad3.toDataURL('image/png');
+            var data3 = datattd3.replace(/^data:image\/(png|jpg);base64,/, "");
+            $('#output_p3').val(data3);
+            $("#sign_prev_p3").show();
+            $("#sign_prev_p3").attr("src", "data:image/png;base64," + data3);
+        });
+
+        $(clear3).click(function() {
+            signaturePad3.clear();
+            //     // Open image in the browser
+            //     //window.open(data);
+        });
+        // })
+    </script>
+@endpush
